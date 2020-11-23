@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import './App.css';
+import { useParams, useHistory, Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div className="App">
-     
+    <div>
+      <Link to="/details">
+        <button>Ir para Detalhes</button>
+      </Link>
+      <Link to="/pokedex">
+        <button>Ir para Pokedex</button>
+      </Link>
     </div>
   );
 }

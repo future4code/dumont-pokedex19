@@ -1,14 +1,15 @@
-import axios from "axios";
+import Router from "./routers/Router.js"
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import './App.css';
+
 
 function App() {
   return (
-    <div className="App">
-     
+    <div >
+     <Router/>
     </div>
   );
 }
 
 export default App;
+
