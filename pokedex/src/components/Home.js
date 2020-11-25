@@ -1,45 +1,54 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
+import usePokemons from "../hooks/usePokemons";
 
-function Home() {
-  const [pokemon, setPokemon] = useState([]);
-  const history = useHistory();
-
-  const pathParams = useParams();
-  const name = pathParams;
+function Home(props) {
+  const pokemons = usePokemons("https://pokeapi.co/api/v2/pokemon", []);
+  const { listPokedex, setListPokedex, listHome, setListHome } = props;
 
   useEffect(() => {
-    listaDePokemon();
-  }, []);
+    detailsPokemons();
+  }, [pokemons]);
 
-  const listaDePokemon = () => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/?limit=20")
-      .then((response) => {
-        setPokemon(response.data.results);
-      });
+  const detailsPokemons = async () => {
+    let copyArray = [];
+    try {
+      for (const pokemon of pokemons) {
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+        );
+        copyArray.push(res.data);
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (listHome.length === 0 && listPokedex.length === 0) {
+      setListHome(copyArray);
+    }
   };
 
-  const choosePokemon = () => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(() => {
-      history.push("/details");
-    });
+  const setPokedex = (pokemon) => {
+    const index = listHome.findIndex((i) => i.id === pokemon.id);
+    const newPokedex = [...listPokedex, pokemon];
+    setListPokedex(newPokedex);
+    listHome.splice(index, 1);
   };
-  console.log(pokemon);
 
   return (
     <div>
-      {pokemon.map((pokemons) => {
+      {listHome.map((pokemon) => {
         return (
           <div>
-            <p>{pokemons.name}</p>
-            <Link to={`/details/${pokemons.name}`}>
-              <button onClick={choosePokemon}> Ir para Detalhes</button>
-            </Link>
-            
-              <button>Adicionar Pokemon</button>
-            
+            <img src={pokemon.sprites.front_default}></img>
+
+            <p>{pokemon.name}</p>
+
+            <button onClick={() => setPokedex(pokemon)}>
+              Adicionar Pokemon
+            </button>
           </div>
         );
       })}
