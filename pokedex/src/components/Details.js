@@ -51,6 +51,9 @@ function Details() {
       <Link to="/">
         <button>Ir para Home</button>
       </Link>
+      <Link to="/pokedex">
+      <button>Voltar para pokedex</button>
+      </Link>
     </CardDetalhes>
   );
 }
