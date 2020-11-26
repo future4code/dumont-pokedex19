@@ -12,16 +12,23 @@ export default function Router() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Home listPokedex={listPokedex} setListPokedex={setListPokedex}  listHome={listHome} setListHome={setListHome} />
+          <Home
+            listPokedex={listPokedex}
+            setListPokedex={setListPokedex}
+            listHome={listHome}
+            setListHome={setListHome}
+          />
         </Route>
         <Route exact path="/details">
           <Details />
         </Route>
         <Route exact path="/pokedex">
-          <Pokedex listHome={listHome} setListHome={setListHome} listPokedex={listPokedex} setListPokedex={setListPokedex} />
-        </Route>
-        <Route >
-         <div></div>
+          <Pokedex
+            listHome={listHome}
+            setListHome={setListHome}
+            listPokedex={listPokedex}
+            setListPokedex={setListPokedex}
+          />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -4,6 +4,10 @@ import { useParams, useHistory, Link } from "react-router-dom";
 import usePokemons from "../hooks/usePokemons";
 
 function Home(props) {
+  const history = useHistory();
+  const pathParams = useParams();
+  const name = pathParams;
+
   const pokemons = usePokemons("https://pokeapi.co/api/v2/pokemon", []);
   const { listPokedex, setListPokedex, listHome, setListHome } = props;
 
@@ -37,11 +41,21 @@ function Home(props) {
     listHome.splice(index, 1);
   };
 
+  const choosePokemon = () => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(() => {
+      history.push("/details");
+    });
+  };
+
   return (
     <div>
+      <Link to="/pokedex">
+        <button>Ir para Pokedex</button>
+      </Link>
+
       {listHome.map((pokemon) => {
         return (
-          <div>
+          <div key={pokemon.name}>
             <img src={pokemon.sprites.front_default}></img>
 
             <p>{pokemon.name}</p>
@@ -49,13 +63,13 @@ function Home(props) {
             <button onClick={() => setPokedex(pokemon)}>
               Adicionar Pokemon
             </button>
+
+            <Link to={`/details/${pokemon.name}`}>
+              <button onClick={() => choosePokemon}> Ir para Detalhes</button>
+            </Link>
           </div>
         );
       })}
-
-      <Link to="/pokedex">
-        <button>Ir para Pokedex</button>
-      </Link>
     </div>
   );
 }
