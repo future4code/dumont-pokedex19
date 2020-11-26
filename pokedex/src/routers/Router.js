@@ -19,7 +19,7 @@ export default function Router() {
             setListHome={setListHome}
           />
         </Route>
-        <Route exact path="/details">
+        <Route exact path="/details/:id">
           <Details />
         </Route>
         <Route exact path="/pokedex">
