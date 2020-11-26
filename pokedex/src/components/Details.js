@@ -28,17 +28,17 @@ function Details() {
       {detailsPokemon && (
         <div>
           <div>
-          <img src={detailsPokemon.sprites.front_default} />
+            <img src={detailsPokemon.sprites.front_default} />
           </div>
 
           <div>
-          <img src={detailsPokemon.sprites.back_default} />
+            <img src={detailsPokemon.sprites.back_default} />
           </div>
-          
+
           <p>{detailsPokemon.name}</p>
 
           {detailsPokemon.types.map((item) => {
-            return <p>{item.type.name}</p>;
+            return <p key={item.name}>{item.type.name}</p>;
           })}
 
           {detailsPokemon.stats.map((item) => {
@@ -52,6 +52,10 @@ function Details() {
           {detailsPokemon.abilities.map((item) => {
             return <p>{item.name}</p>;
           })}
+
+          {/* {detailsPokemon.moves.map((item) => {
+            return <p>{item.move.name}</p>;
+          })} */}
         </div>
       )}
 
