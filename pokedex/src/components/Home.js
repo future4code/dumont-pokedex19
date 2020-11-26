@@ -1,24 +1,44 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link } from "react-router-dom";
+import usePokemons from "../hooks/usePokemons";
 
-function Home() {
-  const [pokemon, setPokemon] = useState([]);
+function Home(props) {
   const history = useHistory();
-
   const pathParams = useParams();
   const name = pathParams;
 
-  useEffect(() => {
-    listaDePokemon();
-  }, []);
+  const pokemons = usePokemons("https://pokeapi.co/api/v2/pokemon", []);
+  const { listPokedex, setListPokedex, listHome, setListHome } = props;
 
-  const listaDePokemon = () => {
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/?limit=20")
-      .then((response) => {
-        setPokemon(response.data.results);
-      });
+  useEffect(() => {
+    detailsPokemons();
+  }, [pokemons]);
+
+  const detailsPokemons = async () => {
+    let copyArray = [];
+    try {
+      for (const pokemon of pokemons) {
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+        );
+        copyArray.push(res.data);
+        console.log(res.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (listHome.length === 0 && listPokedex.length === 0) {
+      setListHome(copyArray);
+    }
+  };
+
+  const setPokedex = (pokemon) => {
+    const index = listHome.findIndex((i) => i.id === pokemon.id);
+    const newPokedex = [...listPokedex, pokemon];
+    setListPokedex(newPokedex);
+    listHome.splice(index, 1);
   };
 
   const choosePokemon = () => {
@@ -26,27 +46,30 @@ function Home() {
       history.push("/details");
     });
   };
-  console.log(pokemon);
 
   return (
     <div>
-      {pokemon.map((pokemons) => {
-        return (
-          <div>
-            <p>{pokemons.name}</p>
-            <Link to={`/details/${pokemons.name}`}>
-              <button onClick={choosePokemon}> Ir para Detalhes</button>
-            </Link>
-            
-              <button>Adicionar Pokemon</button>
-            
-          </div>
-        );
-      })}
-
       <Link to="/pokedex">
         <button>Ir para Pokedex</button>
       </Link>
+
+      {listHome.map((pokemon) => {
+        return (
+          <div key={pokemon.name}>
+            <img src={pokemon.sprites.front_default}></img>
+
+            <p>{pokemon.name}</p>
+
+            <button onClick={() => setPokedex(pokemon)}>
+              Adicionar Pokemon
+            </button>
+
+            <Link to={`/details/${pokemon.name}`}>
+              <button onClick={() => choosePokemon}> Ir para Detalhes</button>
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }
