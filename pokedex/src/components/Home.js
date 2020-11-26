@@ -8,7 +8,7 @@ function Home(props) {
   const pathParams = useParams();
   const name = pathParams;
 
-  const pokemons = usePokemons("https://pokeapi.co/api/v2/pokemon", []);
+  const pokemons = usePokemons("https://pokeapi.co/api/v2/pokemon/?limit=30", []);
   const { listPokedex, setListPokedex, listHome, setListHome } = props;
 
   useEffect(() => {
@@ -35,16 +35,15 @@ function Home(props) {
   };
 
   const setPokedex = (pokemon) => {
+
     const index = listHome.findIndex((i) => i.id === pokemon.id);
     const newPokedex = [...listPokedex, pokemon];
     setListPokedex(newPokedex);
     listHome.splice(index, 1);
   };
 
-  const choosePokemon = () => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then(() => {
-      history.push("/details");
-    });
+  const goToDetails = (id) => {
+    history.push(`/details/${id}`);
   };
 
   return (
@@ -65,7 +64,10 @@ function Home(props) {
             </button>
 
             <Link to={`/details/${pokemon.name}`}>
-              <button onClick={() => choosePokemon}> Ir para Detalhes</button>
+              <button onClick={() => goToDetails(pokemon.id)}>
+                {" "}
+                Ir para Detalhes
+              </button>
             </Link>
           </div>
         );

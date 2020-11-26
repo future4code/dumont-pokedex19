@@ -1,33 +1,57 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import styled from "styled-components";
+
+const CardDetalhes = styled.div`
+  margin-left: 240px;
+`;
 
 function Details() {
-  const [detailsPokemon, setDetailsPokemon] = useState([]);
+  const [detailsPokemon, setDetailsPokemon] = useState(undefined);
 
   const pathParams = useParams();
-  const name = pathParams;
-  const history = useHistory();
+  const id = pathParams.id;
 
   useEffect(() => {
-    choosePokemon();
+    getDetails();
   }, []);
 
-  const choosePokemon = () => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((response) => {
-      setDetailsPokemon(response.results);
+  const getDetails = () => {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((response) => {
+      setDetailsPokemon(response.data);
     });
   };
 
   return (
-    <div>
-      {detailsPokemon.map((item) => {
-        <p>{item.name}</p>;
-      })}
-      <Link to={`/details/${detailsPokemon.name}`}>
-        <button onClick={choosePokemon}> Ir para Detalhes</button>
+    <CardDetalhes>
+      {detailsPokemon && (
+        <div>
+          <img src={detailsPokemon.sprites.front_default} />
+          <p>{detailsPokemon.name}</p>
+
+          {detailsPokemon.types.map((item) => {
+            return <p>{item.type.name}</p>;
+          })}
+
+          {detailsPokemon.stats.map((item) => {
+            <p>{item.stat.name}</p>;
+          })}
+
+          {detailsPokemon.moves.map((item) => {
+            <p>{item.move.name}</p>;
+          })}
+
+          {detailsPokemon.abilities.map((item) => {
+            <p>{item.name}</p>;
+          })}
+        </div>
+      )}
+
+      <Link to="/">
+        <button>Ir para Home</button>
       </Link>
-    </div>
+    </CardDetalhes>
   );
 }
 
