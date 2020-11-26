@@ -27,7 +27,14 @@ function Details() {
     <CardDetalhes>
       {detailsPokemon && (
         <div>
+          <div>
           <img src={detailsPokemon.sprites.front_default} />
+          </div>
+
+          <div>
+          <img src={detailsPokemon.sprites.back_default} />
+          </div>
+          
           <p>{detailsPokemon.name}</p>
 
           {detailsPokemon.types.map((item) => {
