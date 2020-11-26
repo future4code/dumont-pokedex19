@@ -35,15 +35,15 @@ function Details() {
           })}
 
           {detailsPokemon.stats.map((item) => {
-            <p>{item.stat.name}</p>;
-          })}
-
-          {detailsPokemon.moves.map((item) => {
-            <p>{item.move.name}</p>;
+            return (
+              <p>
+                {item.stat.name}: {item.base_stat}
+              </p>
+            );
           })}
 
           {detailsPokemon.abilities.map((item) => {
-            <p>{item.name}</p>;
+            return <p>{item.name}</p>;
           })}
         </div>
       )}
@@ -52,7 +52,7 @@ function Details() {
         <button>Ir para Home</button>
       </Link>
       <Link to="/pokedex">
-      <button>Voltar para pokedex</button>
+        <button>Voltar para pokedex</button>
       </Link>
     </CardDetalhes>
   );
