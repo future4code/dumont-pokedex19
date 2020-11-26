@@ -41,10 +41,6 @@ function Pokedex(props) {
           </div>
         );
       })}
-
-      <Link to="/">
-        <button>Ir para Home</button>
-      </Link>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Home from "../components/Home.js";
 import Details from "../components/Details.js";
 import Pokedex from "../components/Pokedex.js";
+import Navbar from '../components/Navbar';
 
 export default function Router() {
   const [listPokedex, setListPokedex] = useState([]) || [];
@@ -10,6 +11,7 @@ export default function Router() {
 
   return (
     <BrowserRouter>
+    <Navbar/>
       <Switch>
         <Route exact path="/">
           <Home
