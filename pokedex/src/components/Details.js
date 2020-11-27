@@ -3,9 +3,53 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 
-const CardDetalhes = styled.div`
-  margin-left: 240px;
-`;
+const Container = styled.div`
+  background-image: #F8F4F9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+`
+
+const ButtonContainer = styled.div `
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+`
+
+const Button = styled.button `
+  background-color: transparent;
+  color: #96031A;
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #96031A;
+  margin-top: 1rem;
+  &:hover {
+    cursor: pointer;
+    border: 1px solid black;
+    color: black;
+  }
+`
+
+const ContainerImg = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
+const ImgPokemon = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 300px;
+`
+
+const ContainerDetails = styled.div`
+  display: flex;
+`
 
 function Details() {
   const [detailsPokemon, setDetailsPokemon] = useState(undefined);
@@ -24,23 +68,21 @@ function Details() {
   };
 
   return (
-    <CardDetalhes>
+    <Container>
       {detailsPokemon && (
-        <div>
-          <div>
-            <img src={detailsPokemon.sprites.front_default} />
-          </div>
-
-          <div>
-            <img src={detailsPokemon.sprites.back_default} />
-          </div>
-
-          <p>{detailsPokemon.name}</p>
+        <ContainerDetails>
+          <ImgPokemon>
+            <img src={detailsPokemon.sprites.front_default} width="200px;" height="200px;" />
+            <img src={detailsPokemon.sprites.back_default}  width="200px;" height="200px;" />
+          </ImgPokemon>
+    
+          <ContainerImg>
+          <h1>{detailsPokemon.name}</h1>
+          <h2>PODERES</h2>
 
           {detailsPokemon.types.map((item) => {
             return <p key={item.name}>{item.type.name}</p>;
           })}
-
           {detailsPokemon.stats.map((item) => {
             return (
               <p>
@@ -52,20 +94,22 @@ function Details() {
           {detailsPokemon.abilities.map((item) => {
             return <p>{item.name}</p>;
           })}
-
-          {/* {detailsPokemon.moves.map((item) => {
+          
+         {/*{detailsPokemon.moves.map((item) => {
             return <p>{item.move.name}</p>;
           })} */}
-        </div>
+          </ContainerImg>
+        </ContainerDetails>
       )}
-
+    <ButtonContainer>
       <Link to="/">
-        <button>Ir para Home</button>
+        <Button>Ir para Home</Button>
       </Link>
       <Link to="/pokedex">
-        <button>Voltar para pokedex</button>
+        <Button>Voltar para pokedex</Button>
       </Link>
-    </CardDetalhes>
+    </ButtonContainer>
+    </Container>
   );
 }
 
