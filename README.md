@@ -5,12 +5,9 @@ Nome dos integrantes:
 -  Laura Sanches
 - Roberthy Lima
 
-Link do Surge: www.link.com.br
+Link do Surge: tight-daughter.surge.sh
 
-O que funciona:
-- Item 1
-- Item 2
 
 O que não funciona: 
-- Item 3
-- Item 4
+- não conseguimos fazer o map do  moves para os pokemons;
+- não conseguimos colocar em componentes globais o projeto.
