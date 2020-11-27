@@ -27,24 +27,35 @@ function Details() {
     <CardDetalhes>
       {detailsPokemon && (
         <div>
-          <img src={detailsPokemon.sprites.front_default} />
+          <div>
+            <img src={detailsPokemon.sprites.front_default} />
+          </div>
+
+          <div>
+            <img src={detailsPokemon.sprites.back_default} />
+          </div>
+
           <p>{detailsPokemon.name}</p>
 
           {detailsPokemon.types.map((item) => {
-            return <p>{item.type.name}</p>;
+            return <p key={item.name}>{item.type.name}</p>;
           })}
 
           {detailsPokemon.stats.map((item) => {
-            <p>{item.stat.name}</p>;
-          })}
-
-          {detailsPokemon.moves.map((item) => {
-            <p>{item.move.name}</p>;
+            return (
+              <p>
+                {item.stat.name}: {item.base_stat}
+              </p>
+            );
           })}
 
           {detailsPokemon.abilities.map((item) => {
-            <p>{item.name}</p>;
+            return <p>{item.name}</p>;
           })}
+
+          {/* {detailsPokemon.moves.map((item) => {
+            return <p>{item.move.name}</p>;
+          })} */}
         </div>
       )}
 
@@ -52,7 +63,7 @@ function Details() {
         <button>Ir para Home</button>
       </Link>
       <Link to="/pokedex">
-      <button>Voltar para pokedex</button>
+        <button>Voltar para pokedex</button>
       </Link>
     </CardDetalhes>
   );
